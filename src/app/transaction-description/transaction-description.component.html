@@ -1,0 +1,12 @@
+<p>Original Description: {{originalDescription}}</p>
+
+<form [formGroup]="descriptionForm" (submit)="saveDescription()">
+    <input type="text" formControlName="description" style="width: 100%;">
+    <br>
+    <br>
+    <input type="submit">
+    
+</form>
+
+<br>
+<button (click)="resetDescription()">Reset Description</button>
