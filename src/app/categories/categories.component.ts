@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, numberAttribute } from '@angular/core';
-import { Category } from '../category';
+import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from '../categories.service';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })

@@ -4,11 +4,12 @@ import { Transaction } from '../transaction';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TransactionDescriptionComponent } from '../transaction-description/transaction-description.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transaction',
   standalone: true,
-  imports: [CommonModule, RouterModule, TransactionDescriptionComponent],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, TransactionDescriptionComponent],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.css'
 })
@@ -27,6 +28,7 @@ export class TransactionComponent implements OnInit {
     tags: '',
     notes: '',
   };
+  editingDescription: boolean = false;
 
 
   constructor(
@@ -38,6 +40,17 @@ export class TransactionComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+
+  onClickDescription(): void {
+    if (!this.editingDescription) {
+      this.editingDescription = true;
+    }
+  }
+
+  onSavedDescription(): void {
+    this.editingDescription = false;
+    this.getTransaction(this.route.snapshot.params['id']);
+  }
 
   getTransaction(id: number): void {
     this.transactionService.getTransaction(id).subscribe(transaction => {

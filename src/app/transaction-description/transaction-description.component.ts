@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { TransactionService } from '../transaction.service';
@@ -18,6 +18,8 @@ export class TransactionDescriptionComponent implements OnInit {
   descriptionForm = new FormGroup({
     description: new FormControl(''),
   });
+
+  @Output() saved = new EventEmitter<boolean>();
 
   constructor(
     private route: ActivatedRoute,
@@ -43,11 +45,7 @@ export class TransactionDescriptionComponent implements OnInit {
   saveDescription(): void {
     const description = String(this.descriptionForm.value.description);
     this.transactionService.setTransactionDescription(this.transactionId, description).subscribe(result => {
-      this.router.navigate(['/transactions/' + this.transactionId], {
-        queryParams: {
-          needsCategorized: this.needsCategorized
-        }
-      });
+      this.saved.emit(true);
     });
   }
 

@@ -7,10 +7,11 @@
 
 <hr>
 
-<a class="plain_link" [routerLink]="['/transactions/'+transaction.id+'/description']" [queryParams]="{needsCategorized:needsCategorized}">
+<div (click)="onClickDescription()">
     <div class="selection_title">Description</div>
-    <div class="selection_value">{{ transaction.description }}</div>
-</a>
+    <div class="selection_value" *ngIf="!editingDescription">{{ transaction.description }}</div>
+    <app-transaction-description *ngIf="editingDescription" (saved)="onSavedDescription()"/>
+  </div>
 
 <hr>
 
