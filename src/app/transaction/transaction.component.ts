@@ -19,12 +19,11 @@ export class TransactionComponent implements OnInit {
     id: -1,
     bankTransactionId: -1,
     account: '',
-    date: '',
+    transactionDate: '',
     description: '',
     comments: '',
     checkNumber: '',
     amount: 0,
-    category: '',
     tags: '',
     notes: '',
   };
@@ -54,23 +53,7 @@ export class TransactionComponent implements OnInit {
 
   getTransaction(id: number): void {
     this.transactionService.getTransaction(id).subscribe(transaction => {
-      this.transaction = transaction
-
-      if (this.transaction == null) {
-
-      }
-
-      if (this.transaction.category == undefined) {
-        this.transaction.category = "Select Category";
-      }
-
-      if (this.transaction.tags == undefined) {
-        this.transaction.tags = "Add Tags";
-      }
-
-      if (this.transaction.notes == undefined) {
-        this.transaction.notes = "Add Notes";
-      }
+      this.transaction = transaction;
     });
   }
 

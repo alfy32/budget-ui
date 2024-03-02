@@ -39,9 +39,9 @@ export class TransactionService {
         )
     }
 
-    setTransactionCategory(transactionId: number, category: string): Observable<void> {
+    setTransactionCategory(transactionId: number, categoryId: string): Observable<void> {
         const formData = new URLSearchParams();
-        formData.set('category', category);
+        formData.set('categoryId', categoryId);
         return this.http.post<void>(
             '/rest/transactions/' + transactionId + '/category',
             formData.toString(),
@@ -56,14 +56,14 @@ export class TransactionService {
     setTransactionTags(transactionId: number, tags: string[]): Observable<void> {
         return this.http.post<void>(
             '/rest/transactions/' + transactionId + '/tags',
-            tags  
+            tags
         )
     }
 
     setTransactionNotes(transactionId: number, notes: string): Observable<void> {
         return this.http.post<void>(
             '/rest/transactions/' + transactionId + '/notes',
-            notes  
+            notes
         )
     }
 

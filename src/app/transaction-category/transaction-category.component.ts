@@ -40,8 +40,8 @@ export class TransactionCategoryComponent implements OnInit {
     });
   }
 
-  saveCategory(name: string): void {
-    this.transactionService.setTransactionCategory(this.transactionId, name).subscribe(() => {
+  saveCategory(categoryId: string): void {
+    this.transactionService.setTransactionCategory(this.transactionId, categoryId).subscribe(() => {
       this.router.navigate(['/transactions/' + this.transactionId], {
         queryParams: {
           needsCategorized: this.needsCategorized
