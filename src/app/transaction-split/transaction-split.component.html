@@ -8,41 +8,32 @@
 <div class="title">Split Transactions</div>
 
 <table>
-    <thead>
-        <tr>
-            <th>Category</th>
-            <th>Amount</th>
-            <th></th>
-        </tr>
-    </thead>
     <tbody>
         <tr *ngFor="let splitTransaction of split?.transactions; let i = index">
-            <td style="width: 60%;">
+            <td style="min-width: 100px;width: 50%;">
                 <select [(ngModel)]="splitTransaction.categoryId">
                     <option *ngFor="let category of categories" [value]="category.id"
                         [selected]="splitTransaction.categoryId == category.id">{{category.name}}</option>
                 </select>
             </td>
-            <td style="width: 25%;">
-                <input currencyMask [readOnly]="i == 0" [(ngModel)]="splitTransaction.amount"
-                    (change)="updateTotals()">
+            <td style="width: 60px;">
+                <input currencyMask [readOnly]="i == 0" [(ngModel)]="splitTransaction.amount" (focusout)="updateTotals()">
             </td>
-            <td>
-                <button (click)="removeTransaction(i)" *ngIf="i != 0">Delete</button>
+            <td style="width: 10%">
+                <div class="fake_button" (click)="removeTransaction(i)" *ngIf="i != 0">Delete</div>
             </td>
         </tr>
-        <tr style="width: 15%;">
+        <tr>
             <td>
-                <button class="save_button" (click)="saveSplit()">Save</button>
+                <div class="fake_button" (click)="saveSplit()">Save</div>
             </td>
             <td></td>
             <td>
-                <button (click)="addTransaction()">Add</button>
+                <div class="fake_button" (click)="addTransaction()">Add</div>
             </td>
         </tr>
     </tbody>
 </table>
 <hr>
 
-<hr>
-<pre>{{ split | json }}</pre>
+<div class="fake_button" (click)="onClickDone()">Done</div>

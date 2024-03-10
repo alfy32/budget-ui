@@ -5,6 +5,7 @@ button {
     padding: 10px;
     width: 100%;
     max-width: 600px;
-    background-color: #dfe2f2;
-    font-size: large;
+    background-color: #04AA6D;
+    color: #f2f2f2;
+    font-size: x-large;
 }

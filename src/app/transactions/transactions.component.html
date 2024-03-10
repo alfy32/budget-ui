@@ -1,7 +1,4 @@
-<a [routerLink]="['/']">Back to Main Page</a>
-
 <div class="list">
-    <hr>
     <div *ngFor="let transaction of transactions">
         <a class="transaction_link" [routerLink]="['/transactions/'+ transaction.id]" [queryParams]="{needsCategorized:needsCategorized}">
             <div class="transaction_block">

@@ -20,7 +20,14 @@ export class TransactionsComponent implements OnInit {
     private route: ActivatedRoute,
     private transactionService: TransactionService
   ) {
-    this.route.queryParams.subscribe(params => this.needsCategorized = params['needsCategorized'])
+    this.route.queryParams.subscribe(params => {
+      let needsCategorized = params['needsCategorized'];
+      if (needsCategorized != this.needsCategorized) {
+        this.needsCategorized = needsCategorized;
+        this.transactions = [];
+        this.getTransactions();
+      }
+    })
   }
 
   ngOnInit(): void {

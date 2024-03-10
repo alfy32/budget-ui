@@ -1,5 +1,3 @@
-<a [routerLink]="['/transactions']" [queryParams]="{needsCategorized:needsCategorized}">Back</a>
-
 <div class="transaction_amount">{{ transaction.amount/100 | currency }}</div>
 <div class="transaction_description"> {{ transaction.description }}</div>
 <div class="transaction_date"> {{ transaction.transactionDate | date }}</div>
@@ -17,9 +15,10 @@
         <div class="selection_value">{{ transaction.bankTransaction?.description }}</div>
         <input class="description" type="text" (keyup.enter)="onClickUpdateDescription()" [(ngModel)]="transaction.description">
         <br>
-        <button class="description" (click)="onClickUpdateDescription()">Update Description</button>
         <br>
-        <button class="description" (click)="onClickResetDescription()">Reset Description</button>
+        <div class="fake_button" (click)="onClickUpdateDescription()">Update Description</div>
+        <br>
+        <div class="fake_button" (click)="onClickResetDescription()">Reset Description</div>
     </div>
 </div>
 
@@ -49,9 +48,10 @@
     <div *ngIf="editingNotes">
         <input class="description" type="text" (keyup.enter)="onClickUpdateNotes()" [(ngModel)]="transaction.notes">
         <br>
-        <button class="description" (click)="onClickUpdateNotes()">Update Notes</button>
         <br>
-        <button class="description" (click)="onClickCancelNotes()">Cancel</button>
+        <div class="fake_button" (click)="onClickUpdateNotes()">Update Notes</div>
+        <br>
+        <div class="fake_button" (click)="onClickCancelNotes()">Cancel</div>
     </div>
 </div>
 
@@ -64,3 +64,6 @@
 </a>
 
 <hr>
+
+<br>
+<a class="fake_button" [routerLink]="['/transactions']" [queryParams]="{needsCategorized:needsCategorized}">Done</a>

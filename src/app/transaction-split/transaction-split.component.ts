@@ -1,11 +1,10 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TransactionService } from '../transaction.service';
 import { ActivatedRoute } from '@angular/router';
 import { Split } from '../split';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { CategoriesService } from '../categories.service';
 import { Category } from '../category';
-import { SplitTransaction } from '../splitTransaction';
 import { FormsModule } from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
 
@@ -23,6 +22,7 @@ export class TransactionSplitComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private location: Location,
     private transactionService: TransactionService,
     private categoriesService: CategoriesService,
   ) {
@@ -61,6 +61,7 @@ export class TransactionSplitComponent implements OnInit {
       categoryId: this.split.transactions[0].categoryId,
       amount: 0,
     });
+    this.updateTotals()
   }
 
   removeTransaction(index: number): void {
@@ -86,8 +87,12 @@ export class TransactionSplitComponent implements OnInit {
 
   saveSplit(): void {
     this.transactionService.saveSplit(this.split).subscribe(split => {
-      this.split = split
+      this.location.back();
     });
+  }
+
+  onClickDone():void {
+    this.location.back();
   }
 
 }
