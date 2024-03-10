@@ -8,30 +8,59 @@
 <hr>
 
 <div (click)="onClickDescription()">
-    <div class="selection_title">Description</div>
-    <div class="selection_value" *ngIf="!editingDescription">{{ transaction.description }}</div>
-    <app-transaction-description *ngIf="editingDescription" (saved)="onSavedDescription()"/>
-  </div>
+    <div *ngIf="!editingDescription">
+        <div class="selection_title">Description</div>
+        <div class="selection_value">{{ transaction.description }}</div>
+    </div>
+    <div *ngIf="editingDescription">
+        <div class="selection_title">Original Description</div>
+        <div class="selection_value">{{ transaction.bankTransaction?.description }}</div>
+        <input class="description" type="text" (keyup.enter)="onClickUpdateDescription()" [(ngModel)]="transaction.description">
+        <br>
+        <button class="description" (click)="onClickUpdateDescription()">Update Description</button>
+        <br>
+        <button class="description" (click)="onClickResetDescription()">Reset Description</button>
+    </div>
+</div>
 
 <hr>
 
-<a class="plain_link" [routerLink]="['/transactions/'+transaction.id+'/category']" [queryParams]="{needsCategorized:needsCategorized}">
+<a class="plain_link" [routerLink]="['/transactions/'+transaction.id+'/category']"
+    [queryParams]="{needsCategorized:needsCategorized}">
     <div class="selection_title">Category</div>
     <div class="selection_value">{{ transaction.category ? transaction.category.name: "Select Category" }}</div>
 </a>
 
 <hr>
 
-<a class="plain_link" [routerLink]="['/transactions/'+transaction.id+'/tags']" [queryParams]="{needsCategorized:needsCategorized}">
+<a class="plain_link" [routerLink]="['/transactions/'+transaction.id+'/tags']"
+    [queryParams]="{needsCategorized:needsCategorized}">
     <div class="selection_title">Tags</div>
     <div class="selection_value"> {{ transaction.tags || "Add Tags" }}</div>
 </a>
 
 <hr>
 
-<a class="plain_link " [routerLink]="['/transactions/'+transaction.id+'/notes']" [queryParams]="{needsCategorized:needsCategorized}">
+<div (click)="onClickEditNotes()">
     <div class="selection_title">Notes</div>
-    <div class="selection_value">{{ transaction.notes || "Add Notes" }}</div>
+    <div *ngIf="!editingNotes">
+        <div class="selection_value">{{ transaction.notes || "Add Notes" }}</div>
+    </div>
+    <div *ngIf="editingNotes">
+        <input class="description" type="text" (keyup.enter)="onClickUpdateNotes()" [(ngModel)]="transaction.notes">
+        <br>
+        <button class="description" (click)="onClickUpdateNotes()">Update Notes</button>
+        <br>
+        <button class="description" (click)="onClickCancelNotes()">Cancel</button>
+    </div>
+</div>
+
+<hr>
+
+<a class="plain_link " [routerLink]="['/split/'+transaction.bankTransaction?.id]"
+    [queryParams]="{needsCategorized:needsCategorized}">
+    <div class="selection_title">Split Transaction</div>
+    <div class="selection_value">{{ transaction.splitIndex > 0 ? "Split" : "Not Split" }}</div>
 </a>
 
 <hr>

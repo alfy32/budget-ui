@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Transaction } from "./transaction";
 import { Budget } from "./budget";
+import { Split } from "./split";
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
@@ -17,15 +18,15 @@ export class TransactionService {
         });
     }
 
-    getTransaction(transactionId: number): Observable<Transaction> {
+    getTransaction(transactionId: string): Observable<Transaction> {
         return this.http.get<Transaction>('/rest/transactions/' + transactionId);
     }
 
-    getTransactionDescription(transactionId: number): Observable<any> {
+    getTransactionDescription(transactionId: string): Observable<any> {
         return this.http.get<any>('/rest/transactions/' + transactionId + '/description');
     }
 
-    setTransactionDescription(transactionId: number, description: string): Observable<Object> {
+    setTransactionDescription(transactionId: string, description: string): Observable<Object> {
         const formData = new URLSearchParams();
         formData.set('description', description);
         return this.http.post(
@@ -39,7 +40,7 @@ export class TransactionService {
         )
     }
 
-    setTransactionCategory(transactionId: number, categoryId: string): Observable<void> {
+    setTransactionCategory(transactionId: string, categoryId: string): Observable<void> {
         const formData = new URLSearchParams();
         formData.set('categoryId', categoryId);
         return this.http.post<void>(
@@ -53,18 +54,29 @@ export class TransactionService {
         )
     }
 
-    setTransactionTags(transactionId: number, tags: string[]): Observable<void> {
+    setTransactionTags(transactionId: string, tags: string[]): Observable<void> {
         return this.http.post<void>(
             '/rest/transactions/' + transactionId + '/tags',
             tags
         )
     }
 
-    setTransactionNotes(transactionId: number, notes: string): Observable<void> {
+    setTransactionNotes(transactionId: string, notes: any): Observable<void> {
         return this.http.post<void>(
             '/rest/transactions/' + transactionId + '/notes',
             notes
         )
+    }
+
+    getSplit(id: string): Observable<Split> {
+        return this.http.get<Split>('/rest/split/' + id);
+    }
+
+    saveSplit(split?: Split): Observable<Split> {
+        return this.http.post<Split>(
+            '/rest/split/' + split?.bankTransaction?.id,
+            split
+        );
     }
 
     getBudgets(date: Date): Observable<Budget[]> {

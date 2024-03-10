@@ -3,32 +3,27 @@ import { TransactionService } from '../transaction.service';
 import { Transaction } from '../transaction';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TransactionDescriptionComponent } from '../transaction-description/transaction-description.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-transaction',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, TransactionDescriptionComponent],
+  imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule],
   templateUrl: './transaction.component.html',
   styleUrl: './transaction.component.css'
 })
 export class TransactionComponent implements OnInit {
   needsCategorized: boolean = false;
   transaction: Transaction = {
-    id: -1,
-    bankTransactionId: -1,
+    id: '',
+    splitIndex: -1,
     account: '',
     transactionDate: '',
     description: '',
-    comments: '',
-    checkNumber: '',
     amount: 0,
-    tags: '',
-    notes: '',
   };
   editingDescription: boolean = false;
-
+  editingNotes: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,12 +41,41 @@ export class TransactionComponent implements OnInit {
     }
   }
 
-  onSavedDescription(): void {
-    this.editingDescription = false;
-    this.getTransaction(this.route.snapshot.params['id']);
+  onClickUpdateDescription(): void {
+    this.transactionService.setTransactionDescription(this.transaction.id, this.transaction.description).subscribe(result => {
+      this.editingDescription = false;
+    });
   }
 
-  getTransaction(id: number): void {
+  onClickResetDescription(): void {
+    if (this.transaction.bankTransaction) {
+      this.transaction.description = this.transaction.bankTransaction?.description;
+      this.transactionService.setTransactionDescription(this.transaction.id, this.transaction.description).subscribe(result => {
+        this.editingDescription = false;
+      });
+    }
+  }
+
+  onClickEditNotes(): void {
+    if (!this.editingNotes) {
+      this.editingNotes = true;
+    }
+  }
+
+  onClickUpdateNotes(): void {
+    this.transactionService.setTransactionNotes(this.transaction.id, this.transaction.notes).subscribe(result => {
+      this.editingNotes = false;
+    });
+  }
+
+  onClickCancelNotes(): void {
+    this.transactionService.getTransaction(this.transaction.id).subscribe(transaction => {
+      this.transaction = transaction;
+      this.editingNotes = false;
+    });
+  }
+
+  getTransaction(id: string): void {
     this.transactionService.getTransaction(id).subscribe(transaction => {
       this.transaction = transaction;
     });

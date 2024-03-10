@@ -13,8 +13,8 @@ import { from } from 'rxjs';
   styleUrl: './transaction-tags.component.css'
 })
 export class TransactionTagsComponent implements OnInit {
-  transactionId: number;
-  needsCategorized: boolean ;
+  transactionId: string;
+  needsCategorized: boolean;
   formArray: FormArray<any>;
   formGroup: FormGroup;
 
@@ -32,7 +32,7 @@ export class TransactionTagsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private transactionService: TransactionService
   ) {
-    this.transactionId = -1;
+    this.transactionId = '';
     this.route.params.subscribe(params => {
       this.transactionId = params['id'];
     });
@@ -50,12 +50,14 @@ export class TransactionTagsComponent implements OnInit {
 
   ngOnInit(): void {
     this.transactionService.getTransaction(this.transactionId).subscribe(transaction => {
-      const tagSet = this.getTagSet(transaction.tags);
-      console.log("tags:" + tagSet);
+      if (transaction.tags) {
+        const tagSet = this.getTagSet(transaction.tags);
+        console.log("tags:" + tagSet);
 
-      this.tags.forEach(tag => {
-        this.formArray.push(new FormControl(tagSet.includes(tag)));
-      })
+        this.tags.forEach(tag => {
+          this.formArray.push(new FormControl(tagSet.includes(tag)));
+        })
+      }
     });
   }
 

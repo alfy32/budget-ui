@@ -1,15 +1,15 @@
+import { BankTransaction } from "./bankTransaction";
 import { Category } from "./category";
 
 export interface Transaction {
-    id: number,
-    bankTransactionId: number,
+    id: string,
+    bankTransaction?: BankTransaction,
+    splitIndex: number,
     account: string,
     transactionDate: string,
     description: string,
-    comments: string,
-    checkNumber: string,
     amount: number,
     category?: Category,
-    tags: string,
-    notes: string,
+    tags?: string,
+    notes?: string,
 }

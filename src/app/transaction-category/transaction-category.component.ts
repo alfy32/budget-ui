@@ -14,7 +14,7 @@ import { TransactionService } from '../transaction.service';
   styleUrl: './transaction-category.component.css'
 })
 export class TransactionCategoryComponent implements OnInit {
-  transactionId: number = -1;
+  transactionId: string;
   needsCategorized: boolean = false;
   categoryForm: FormGroup = new FormGroup({});
   categories: Category[] = [];
@@ -25,6 +25,7 @@ export class TransactionCategoryComponent implements OnInit {
     private categoriesService: CategoriesService,
     private transactionService: TransactionService
   ) {
+    this.transactionId = '';
     this.route.params.subscribe(params => {
       this.transactionId = params['id'];
     });

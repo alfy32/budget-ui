@@ -1,0 +1,19 @@
+main {
+    height: 86vh;
+    overflow-y: auto;
+    background-color: white;
+    padding: 0px 5px;
+}
+
+footer {
+    margin-top: 10px;
+    font-size: x-large;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    width: 100%;
+    color: inherit;
+}
